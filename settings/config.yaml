@@ -1,0 +1,32 @@
+
+app:
+  name: "web_app"
+  machineID: 4
+  startTime: "2020-01-01"
+  port: 8081
+  mode: "dev"
+
+
+log:
+  level: "debug"
+  filename: "web_app_test.log"
+  max_size: 200  # MB
+  max_age: 30    # 保存 30 day
+  max_backups: 7
+
+
+mysql:
+  host: "172.20.0.1"
+  port: 3306
+  user: "root"
+  password: "123456"
+  dbname: "bluebell"
+
+redis:
+  host: "172.20.0.1"
+  port: 6379
+  db: 0
+
+ # "root:123456@tcp(172.20.0.1:3306)/giligili?charset=utf8mb4&parseTime=True&&multiStatements=true&loc=Local" 
+ 
+
