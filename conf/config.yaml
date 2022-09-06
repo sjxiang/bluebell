@@ -1,3 +1,4 @@
 
 app:
   name: "web_app"
+  machineID: 123456
