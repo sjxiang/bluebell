@@ -27,3 +27,11 @@ func Init(startTime string, machineID int64) (err error) {
 func GetID() int64 {
 	return node.Generate().Int64()
 }
+
+// if err := snowflake.Init(viper.GetString("app.startTime"), viper.GetInt64("app.machineID")); err != nil {
+// 	fmt.Printf("init pkg snowflake failed, err:%v\n", err)
+// 	return 
+// }
+
+// id := snowflake.GetID()
+// fmt.Println(id)

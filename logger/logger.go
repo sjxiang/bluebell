@@ -29,6 +29,7 @@ func Init() (err error) {
 	}
 
 	// 初始化 core
+	// zapcore.DebugLevel
 	core := zapcore.NewCore(encoder, writeSyncer, logLevel)
 	
 	// 初始化 Logger

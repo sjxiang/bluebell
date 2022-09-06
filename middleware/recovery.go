@@ -13,6 +13,7 @@ import (
 )
 
 // Recovery 使用 zap.Error() 来记录 Panic 和 call stack
+// 抄下默认的 
 func Recovery() gin.HandlerFunc {
 
 	return func(ctx *gin.Context) {

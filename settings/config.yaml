@@ -16,14 +16,16 @@ log:
 
 
 mysql:
-  host: "172.20.0.1"
+  host: "172.19.0.1"
   port: 3306
   user: "root"
   password: "123456"
   dbname: "bluebell"
+  max_open_conns: 50
+  max_idle_conns: 10
 
 redis:
-  host: "172.20.0.1"
+  host: "172.19.0.1"
   port: 6379
   db: 0
 
