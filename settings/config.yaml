@@ -4,7 +4,7 @@ app:
   version: "1.4"
   port: 8081
   mode: "dev"
-  machine_id: 4
+  machine_id: 1
   start_Time: "2020-01-01"
 
 
