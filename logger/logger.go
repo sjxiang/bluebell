@@ -1,30 +1,29 @@
 package logger
 
 import (
-	"time"
 	"strings"
+	"time"
 
-	"github.com/spf13/viper"
+	"github.com/sjxiang/bluebell/settings"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 
-func Init() (err error) {
-
+func Init(cfg *settings.LogConfig) (err error) {
 	writeSyncer := getLogWriter(
-		viper.GetString("log.filename"),
-		viper.GetInt("log.max_size"),
-		viper.GetInt("log.max_age"),
-		viper.GetInt("log.max_backups"),
+		cfg.Filename,
+		cfg.MaxSize,
+		cfg.MaxAge,
+		cfg.MaxBackups,
 	)
 
 	encoder := getEncoder()
 
 	// 设置日志等级
 	logLevel := new(zapcore.Level)
-	if err := logLevel.UnmarshalText([]byte(viper.GetString("log.level"))); err != nil {
+	if err := logLevel.UnmarshalText([]byte(cfg.Level)); err != nil {
 		return err
 	}
 
@@ -56,6 +55,7 @@ func getLogWriter(filename string,  maxSize, maxAge, maxBackup int) zapcore.Writ
 	datename := time.Now().Format("2006-01-02")
 	filename = strings.ReplaceAll(filename, "test", datename)
 	
+	// 日志切割
 	lumberJackLogger := &lumberjack.Logger{
 		Filename:   filename,
 		MaxSize:    maxSize,
@@ -64,6 +64,14 @@ func getLogWriter(filename string,  maxSize, maxAge, maxBackup int) zapcore.Writ
 	}
 
 	return zapcore.AddSync(lumberJackLogger)
+	// // 输出流配置
+	// if conf.IsLocal() {
+	// 	// 测试、开发环境 - 同时向控制台和日志文件输出 
+	// 	return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(lumberJackLogger)) 
+	// } else {
+	// 	// 生产环境只输出到文件中
+	// 	return zapcore.AddSync(lumberJackLogger)  // 同步写入 + 塞入句柄
+	// }
 }
 
 

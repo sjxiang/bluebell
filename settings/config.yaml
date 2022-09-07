@@ -1,10 +1,11 @@
 
 app:
   name: "web_app"
-  machineID: 4
-  startTime: "2020-01-01"
+  version: "1.4"
   port: 8081
   mode: "dev"
+  machine_id: 4
+  start_Time: "2020-01-01"
 
 
 log:
@@ -20,14 +21,16 @@ mysql:
   port: 3306
   user: "root"
   password: "123456"
-  dbname: "bluebell"
+  db_name: "bluebell"
   max_open_conns: 50
   max_idle_conns: 10
 
 redis:
   host: "172.19.0.1"
+  password: ""
   port: 6379
   db: 0
+  pool_size: 100
 
  # "root:123456@tcp(172.20.0.1:3306)/giligili?charset=utf8mb4&parseTime=True&&multiStatements=true&loc=Local" 
  

@@ -15,7 +15,7 @@ services:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_ALLOW_Empty_PASSWORD: no
 
-      # 自动创建名为 'bluebell' 的数据库，create database bluebell;
+      # 自动创建名为 'bluebell' 的数据库，create database bluebelli;
       MYSQL_DATABASE: bluebell
       # 自动创建数据库的普通用户 'test'
       MYSQL_USER: test

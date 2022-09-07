@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/spf13/viper"
+	"github.com/sjxiang/bluebell/settings"
 )
 
 
@@ -18,12 +18,12 @@ type RedisClient struct {
 var once sync.Once
 var Redis *RedisClient
 
-func Init() (err error) {
+func Init(cfg *settings.RedisConfig) (err error) {
 	once.Do(func() {
 		Redis, err = NewClient(
-			fmt.Sprintf("%s:%d", viper.GetString("redis.host"),viper.GetInt("redis.port")) ,
-			"",
-			viper.GetInt("redis.db"),
+			fmt.Sprintf("%s:%d", cfg.Host, cfg.Port) ,
+			cfg.Password,
+			cfg.DB,
 		)
 	})
 	return
