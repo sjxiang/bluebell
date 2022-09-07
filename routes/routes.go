@@ -5,12 +5,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/sjxiang/bluebell/middleware"
+	"github.com/sjxiang/bluebell/middlewares"
 )
 
 func Setup() *gin.Engine {
+
 	r := gin.New()
-	r.Use(middleware.Logger(), middleware.Recovery())
+	r.Use(middlewares.Logger(), middlewares.Recovery())
 
 	
 	r.GET("/ping", func(ctx *gin.Context) {
@@ -19,5 +20,6 @@ func Setup() *gin.Engine {
 		})
 	})
 
+	
 	return r
 }

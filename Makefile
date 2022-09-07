@@ -10,7 +10,7 @@ ERROR_COLOR=\033[31;01m
 run:
 	@echo ''
 	@printf '$(OK_COLOR)快糙猛，跑一哈 .. 🚀$(NO_COLOR)\n'
-	@go run ./main.go
+	@ go run main.go --filename ./settings/config.yaml
 	@echo '🎯'
 	@echo ''
 	

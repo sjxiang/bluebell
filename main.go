@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 
@@ -15,9 +16,17 @@ import (
 
 
 func main() {
+
+	// 定义命令行参数
+	var filename string
+	flag.StringVar(&filename, "filename", "./settings/config.yaml", "配置文件")
 	
+	// 解析命令行参数
+	flag.Parse()
+
+
 	// 1. 加载配置 
-	if err := settings.Init(); err != nil {
+	if err := settings.Init(filename); err != nil {
 		fmt.Printf("init settings failed, err:%v\n", err)
 		return
 	}

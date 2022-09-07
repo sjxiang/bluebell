@@ -60,9 +60,9 @@ type RedisConfig struct {
 
 
 
-func Init() (err error) {
+func Init(filename string) (err error) {
 	
-	viper.SetConfigFile("./settings/config.yaml")
+	viper.SetConfigFile(filename)
 	
 	if err = viper.ReadInConfig(); err != nil {  
 		// 读取配置信息失败
