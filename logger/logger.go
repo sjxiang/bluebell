@@ -3,6 +3,7 @@ package logger
 import (
 	"strings"
 	"time"
+	"os"
 
 	"github.com/sjxiang/bluebell/settings"
 	"go.uber.org/zap"
@@ -11,12 +12,13 @@ import (
 )
 
 
-func Init(cfg *settings.LogConfig) (err error) {
+func Init(cfg *settings.LogConfig, mode string) (err error) {
 	writeSyncer := getLogWriter(
 		cfg.Filename,
 		cfg.MaxSize,
 		cfg.MaxAge,
 		cfg.MaxBackups,
+		mode,
 	)
 
 	encoder := getEncoder()
@@ -49,7 +51,7 @@ func Init(cfg *settings.LogConfig) (err error) {
 // getLogWriter 多个输出流 
 // 1. 日志文件 .log 
 // 2. 控制台 os.Stdout  
-func getLogWriter(filename string,  maxSize, maxAge, maxBackup int) zapcore.WriteSyncer {
+func getLogWriter(filename string,  maxSize, maxAge, maxBackup int, mode string) zapcore.WriteSyncer {
 
 	// // 按照日期记录 log
 	datename := time.Now().Format("2006-01-02")
@@ -63,15 +65,12 @@ func getLogWriter(filename string,  maxSize, maxAge, maxBackup int) zapcore.Writ
 		MaxAge:     maxAge,
 	}
 
+	// dev 模式，同时写入 terminal 和 log
+	if mode == "dev" {
+		return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(lumberJackLogger)) 
+	}
+
 	return zapcore.AddSync(lumberJackLogger)
-	// // 输出流配置
-	// if conf.IsLocal() {
-	// 	// 测试、开发环境 - 同时向控制台和日志文件输出 
-	// 	return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(lumberJackLogger)) 
-	// } else {
-	// 	// 生产环境只输出到文件中
-	// 	return zapcore.AddSync(lumberJackLogger)  // 同步写入 + 塞入句柄
-	// }
 }
 
 

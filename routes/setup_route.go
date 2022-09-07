@@ -10,8 +10,12 @@ import (
 )
 
 // 路由初始化
-func Setup() *gin.Engine {
-
+func Setup(mode string) *gin.Engine {
+	
+	if mode == gin.ReleaseMode {  // "release"
+		gin.SetMode(gin.ReleaseMode)
+	} 
+	
 	router := gin.New()
 	
 	// 注册中间件 
