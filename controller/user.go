@@ -20,9 +20,19 @@ func SignUpHandler(ctx *gin.Context) {
 	}
 
 	// 2. 业务处理
-	logic.Signup()
+	if err := logic.Signup(p); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"Msg": "用户注册失败",
+			"Error": err.Error(),
+		})
+
+		return
+	}
+
 
 	// 3. 返回响应
-	ctx.JSON(http.StatusOK, gin.H{})
+	ctx.JSON(http.StatusOK, gin.H{
+		"Msg": "用户注册成功",
+	})
 }
 

@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/sjxiang/bluebell/middlewares"
+	// "github.com/sjxiang/bluebell/middlewares"
 )
 
 // 路由初始化
@@ -35,10 +35,10 @@ func Setup(mode string) *gin.Engine {
 
 
 func registerMiddleWare(router *gin.Engine) {
-	router.Use(
-		middlewares.Logger(), 
-		middlewares.Recovery(),
-	)
+	// router.Use(
+	// 	middlewares.Logger(), 
+	// 	middlewares.Recovery(),
+	// )
 }
 
 
