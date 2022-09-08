@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS `user`;
 
 
 -- 用户表结构设计
-
+`gorm:"type:varchar(20)"
 CREATE TABLE `user` (
     `id`          bigint(20)  NOT NULL AUTO_INCREMENT,
     `user_id`     varchar(64) NOT NULL,
@@ -25,4 +25,6 @@ CREATE TABLE `user` (
 
 describe user;
 
+
+`gorm:"type:varchar(60);not null"`
 
