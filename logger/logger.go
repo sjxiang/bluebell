@@ -21,7 +21,7 @@ func Init(cfg *settings.LogConfig, mode string) (err error) {
 		mode,
 	)
 
-	encoder := getEncoder()
+	encoder := getEncoder(mode)
 
 	// 设置日志等级
 	logLevel := new(zapcore.Level)
@@ -76,7 +76,7 @@ func getLogWriter(filename string,  maxSize, maxAge, maxBackup int, mode string)
 
 
 // getEncoder 设置 Log Entry 格式
-func getEncoder() zapcore.Encoder {
+func getEncoder(mode string) zapcore.Encoder {
 	
 	encoderConfig := zap.NewProductionEncoderConfig()  // 很多都是默认设置，不用再写一遍
 	encoderConfig.EncodeTime = customTimeEncoder  // 时间戳格式
@@ -84,6 +84,16 @@ func getEncoder() zapcore.Encoder {
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	encoderConfig.EncodeDuration = zapcore.SecondsDurationEncoder
 	encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
+	
+	// dev 模式，终端输出设置
+	if mode == "dev" {
+		
+		// 终端输出的关键词高亮
+		encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+
+		// 本地设置内置的 Console 解码器（支持 stacktrace 换行）
+		return zapcore.NewConsoleEncoder(encoderConfig)
+	}
 	
 	return zapcore.NewJSONEncoder(encoderConfig)  // JSON 格式
 }

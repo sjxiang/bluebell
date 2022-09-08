@@ -16,6 +16,7 @@ type CommonTimestampsField struct {
 }
 
 
+// 用户表
 type User struct {
 	Base 
 	
