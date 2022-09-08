@@ -2,8 +2,8 @@ package logic
 
 import (
 	"github.com/sjxiang/bluebell/dao/mysql"
-	// "github.com/sjxiang/bluebell/models"
-	// "github.com/sjxiang/bluebell/pkg/snowflake"
+	"github.com/sjxiang/bluebell/models"
+	"github.com/sjxiang/bluebell/pkg/snowflake"
 	"github.com/sjxiang/bluebell/requests"
 )
 
@@ -18,18 +18,18 @@ func Signup(p *requests.ParamSignup) (err error) {
 	}
 
 	// 2. 生成 uid
-	// userID := snowflake.GetID()
+	userID := snowflake.GetID()
 	
 	// 构造 1 个 user 实例
-	// u := &models.User{
-	// 	UserID: userID,
-	// 	Username: p.Username,
-	// 	Password: p.Password,
-	// }
+	u := models.User{
+		UserID: userID,
+		Username: p.Username,
+		Password: p.Password,
+	}
 
 
 	// 3. 保存进数据库
-	// err = mysql.InsertUser(u)
+	err = mysql.InsertUser(&u)
 
 	return
 }
