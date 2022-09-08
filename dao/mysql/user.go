@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/sjxiang/bluebell/models"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // 把每一步数据库操作封装成函数
@@ -35,27 +34,26 @@ func CheckUserExist(username string) (err error) {
 // InsertUser 向数据库中插入一条新的记录
 func InsertUser(user *models.User) (err error) {
 
-	// 对密码加密
-	
-	// GenerateFromPassword 的第二个参数时 cost 值，建议大于 12，数值越大耗费时间越长
-	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
-	if err != nil {
-		return
-	}
-
-	user.Password = string(hash)
-
 	// 执行 SQL 入库
-	result := DB.Create(user)
-	if result.Error != nil {
-		return 
+	err = DB.Create(user).Error
+	if err != nil {
+		
+		// 创建失败
+		return  
 	}
 
 	return nil  
 }
 
 
-// func QueryUserByUsername() {
+func QueryUserByUsername(user *models.User) (err error) {
+	
+	err = DB.Where("username = ?", user.Username).Find(user).Error
 
-// }
+	if err != nil {
+		return 
+	}
+
+	return nil 
+}
 

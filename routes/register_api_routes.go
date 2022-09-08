@@ -12,7 +12,8 @@ func registerApiRoutes(router *gin.Engine) {
 	router.POST("/signup", controller.SignUpHandler)
 
 	// 用户登录
+	router.POST("/login", controller.LoginHandler)
 
-	// 用户校验
+	// 身份验证
 	
 }

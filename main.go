@@ -9,7 +9,7 @@ import (
 
 	"github.com/sjxiang/bluebell/dao/mysql"
 	"github.com/sjxiang/bluebell/dao/redis"
-	"github.com/sjxiang/bluebell/logger"
+	"github.com/sjxiang/bluebell/pkg/logger"
 	"github.com/sjxiang/bluebell/pkg/snowflake"
 	"github.com/sjxiang/bluebell/routes"
 	"github.com/sjxiang/bluebell/settings"

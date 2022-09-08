@@ -32,4 +32,12 @@ user_id
     
 
 
+
+ctx.ShouldBindJSON(obj)
+
+    JSON 序列化出现错误，panic
+    "json: unsupported type: func() string"
+    
+
+    
 ```

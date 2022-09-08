@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/sjxiang/bluebell/middlewares"
+	"github.com/sjxiang/bluebell/pkg/middlewares"
 )
 
 // 路由初始化
