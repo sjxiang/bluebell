@@ -1,6 +1,8 @@
 package mysql
 
 import (
+
+	"go.uber.org/zap"
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/sjxiang/bluebell/models"
@@ -8,6 +10,7 @@ import (
 
 // 把每一步数据库操作封装成函数
 // 待 logic 层根据业务需求调用
+
 
 // CheckUserExist 检查指定用户名的用户是否存在
 func CheckUserExist(username string) bool {
@@ -19,7 +22,7 @@ func CheckUserExist(username string) bool {
 
 	DB.Table("user").Select("user_id").Where("username = ?", username).Count(&count)
 
-	return !(count > 0)
+	return !(count > 0)  // Tips：取反
 }
 
 
@@ -30,6 +33,7 @@ func InsertUser(user *models.User) bool {
 	return user.ID > 0
 }
 
+
 // 查询 username 所属的用户
 func QueryUserByUsername(user *models.User) bool {
 
@@ -39,19 +43,27 @@ func QueryUserByUsername(user *models.User) bool {
 }
 
 
-// 
+
+
+// ===
+
+// 明文密码加密
+func BcryptPassword(plainText string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(plainText), 14)
+	if err != nil {
+		zap.L().Error("加密失败_mysql_BcryptPassword", zap.Error(err))  // 参数 2 为 cost 值，建议大于 12，数值越大耗费时间越长
+		return "", err
+	}
+	return string(hash), nil 
+} 
+
+
+// 校验明文密码和哈希值
 func ComparePassword(plainText, hash string) bool {
-	return _hash.BcryptCheck(plainText, hash)
+	// 前哈希值，后明文密码
+	if err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(plainText)); err != nil {
+		zap.L().Error("密码错误_mysql_ComparePassword", zap.Error(err))
+		return false
+	}
+	return true
 }
-
-
-// err := bcrypt.CompareHashAndPassword([]byte(plainText), []byte(hash))
-	
-// 	if err != nil {
-// 		zap.L().Error("密码错误 hash BcryptCheck", zap.Error(err))
-// 		return false
-// 	}
-	
-// 	return true 
-
-

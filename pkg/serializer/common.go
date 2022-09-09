@@ -12,6 +12,21 @@ type Response struct {
 }
 
 
+// 貌似冲突了，本身就屏蔽了 "具体错误" 
+//
+// 前者已经屏蔽了底层
+//
+// var ErrorEncryptFailed = errors.New("加密失败")
+//
+// 后者，Err 里面屏蔽了
+//  
+// switch {
+// case errors.Is(err, logic.ErrorEncryptFailed):
+//     serializer.Err(CodeEncryptError, "加密失败", err)
+// default:
+// }
+//
+
 // Err 通用错误
 func Err(errCode int, msg string, err error) Response {
 	res := Response{

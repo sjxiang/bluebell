@@ -5,9 +5,16 @@ import (
 
 	"github.com/sjxiang/bluebell/dao/mysql"
 	"github.com/sjxiang/bluebell/models"
-	"github.com/sjxiang/bluebell/pkg/hash"
 	"github.com/sjxiang/bluebell/pkg/snowflake"
 	"github.com/sjxiang/bluebell/requests"
+)
+
+
+var (
+	ErrorUserExist   = errors.New("用户已存在")
+	ErrorUserNoExist = errors.New("用户不存在")
+	ErrorInvalidPassword = errors.New("密码错误")
+	ErrorEncryptFailed = errors.New("加密失败")
 )
 
 // 存放业务逻辑的代码，拼装
@@ -24,7 +31,7 @@ func Signup(p *requests.ParamSignup) (err error) {
 	userID := snowflake.GetID()
 	
 	// 3. 密码加密
-	hash, err := hash.BcryptHash(p.Password)
+	hash, err := mysql.BcryptPassword(p.Password)
 	if err != nil {
 		return errors.New("加密失败")
 	}
@@ -46,10 +53,9 @@ func Signup(p *requests.ParamSignup) (err error) {
 
 func Login(p *requests.ParamLogin) (err error) {
 	
-	// 1. 查询请求 login 的用户
-	user := models.User{
-		Username: p.Username,
-	}
+	// 1. 查询请求登录的用户 `username`
+	var user models.User
+	user.Username = p.Username
 
 	if ok := mysql.QueryUserByUsername(&user); !ok {
 		return errors.New("用户不存在")
