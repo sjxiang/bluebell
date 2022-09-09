@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"errors"
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/sjxiang/bluebell/models"
 )
@@ -10,50 +10,48 @@ import (
 // 待 logic 层根据业务需求调用
 
 // CheckUserExist 检查指定用户名的用户是否存在
-func CheckUserExist(username string) (err error) {
+func CheckUserExist(username string) bool {
 
 	// var users []models.User
 	// DB.Model(user).Select("user_id").Where("username = ?", username).Count(&count)
 
 	var count int64
 
-	err = DB.Table("user").Select("user_id").Where("username = ?", username).Count(&count).Error
-	if err != nil {
-		// 数据库查询出错
-		return err
-	}
-	if count > 0 {
-		// 用户已存在的错误
-		return errors.New("用户已存在")
-	}
+	DB.Table("user").Select("user_id").Where("username = ?", username).Count(&count)
 
-	return nil
+	return !(count > 0)
 }
 
 
 // InsertUser 向数据库中插入一条新的记录
-func InsertUser(user *models.User) (err error) {
+func InsertUser(user *models.User) bool {
 
-	// 执行 SQL 入库
-	err = DB.Create(user).Error
-	if err != nil {
-		
-		// 创建失败
-		return  
-	}
+	DB.Create(user)
+	return user.ID > 0
+}
 
-	return nil  
+// 查询 username 所属的用户
+func QueryUserByUsername(user *models.User) bool {
+
+	DB.Where("username = ?", user.Username).First(user)
+
+	return user.ID > 0
 }
 
 
-func QueryUserByUsername(user *models.User) (err error) {
+// 
+func ComparePassword(plainText, hash string) bool {
+	return _hash.BcryptCheck(plainText, hash)
+}
+
+
+// err := bcrypt.CompareHashAndPassword([]byte(plainText), []byte(hash))
 	
-	err = DB.Where("username = ?", user.Username).Find(user).Error
+// 	if err != nil {
+// 		zap.L().Error("密码错误 hash BcryptCheck", zap.Error(err))
+// 		return false
+// 	}
+	
+// 	return true 
 
-	if err != nil {
-		return 
-	}
-
-	return nil 
-}
 
