@@ -6,6 +6,7 @@ app:
   mode: "dev"
   machine_id: 1
   start_Time: "2020-01-01"
+  secret: "jisooandsjxiang"
 
 
 log:

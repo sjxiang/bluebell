@@ -48,14 +48,15 @@ func LoginHandler(ctx *gin.Context) {
 	}
 
 	// 2. 业务逻辑处理
-	if err := logic.Login(p); err != nil {
+	token, err := logic.Login(p)
+	if err != nil {
 		ctx.JSON(http.StatusBadRequest, serializer.Err(40001, "用户登录失败", err))
 
 		return
 	}
 	
 	// 3. 返回响应
-	ctx.JSON(http.StatusOK, serializer.Response{Msg: "用户登录成功"})
+	ctx.JSON(http.StatusOK, serializer.Response{Msg: "用户登录成功", Data: token})
 }
 
 

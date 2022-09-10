@@ -27,6 +27,7 @@ type AppConfig struct {
 	Version     string `mapstructure:"version"`
 	MachineID   int64  `mapstructure:"machine_id"`
 	StartTime   string `mapstructure:"start_time"`
+	Secret      string `mapstructure:"secret"`
 }
 
 

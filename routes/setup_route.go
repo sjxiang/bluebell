@@ -25,7 +25,7 @@ func Setup(mode string) *gin.Engine {
 	registerApiRoutes(router)
 	
 	// 配置 ping 路由
-	setupHealthCheckHandler(router)
+	setupHealthHandler(router)
 
 	// 配置 404 路由
 	setupNoFoundHandler(router)
@@ -66,7 +66,7 @@ func setupNoFoundHandler(router *gin.Engine) {
 }
 
 
-func setupHealthCheckHandler(router *gin.Engine) {
+func setupHealthHandler(router *gin.Engine) {
 
 	router.GET("/ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{

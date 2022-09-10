@@ -48,7 +48,7 @@ func QueryUserByUsername(user *models.User) bool {
 // ===
 
 // 明文密码加密
-func BcryptPassword(plainText string) (string, error) {
+func EncryptPassword(plainText string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(plainText), 14)
 	if err != nil {
 		zap.L().Error("加密失败_mysql_BcryptPassword", zap.Error(err))  // 参数 2 为 cost 值，建议大于 12，数值越大耗费时间越长

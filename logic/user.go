@@ -6,6 +6,7 @@ import (
 	"github.com/sjxiang/bluebell/dao/mysql"
 	"github.com/sjxiang/bluebell/models"
 	"github.com/sjxiang/bluebell/pkg/snowflake"
+	"github.com/sjxiang/bluebell/pkg/jwt"
 	"github.com/sjxiang/bluebell/requests"
 )
 
@@ -31,7 +32,7 @@ func Signup(p *requests.ParamSignup) (err error) {
 	userID := snowflake.GetID()
 	
 	// 3. 密码加密
-	hash, err := mysql.BcryptPassword(p.Password)
+	hash, err := mysql.EncryptPassword(p.Password)
 	if err != nil {
 		return errors.New("加密失败")
 	}
@@ -51,23 +52,22 @@ func Signup(p *requests.ParamSignup) (err error) {
 }
 
 
-func Login(p *requests.ParamLogin) (err error) {
+func Login(p *requests.ParamLogin) (string, error) {
 	
-	// 1. 查询请求登录的用户 `username`
+	// 1. 查询请求登录的用户 `sjxiang`
 	var user models.User
 	user.Username = p.Username
 
 	if ok := mysql.QueryUserByUsername(&user); !ok {
-		return errors.New("用户不存在")
+		return "", errors.New("用户不存在")
 	}
 
 	// 2. 判断密码是否正确 
 	if ok := mysql.ComparePassword(p.Password, user.Password); !ok {
-		return errors.New("密码错误")
+		return "", errors.New("密码错误")
 	}
 
-
-	// 3. JWT
-	return nil
+	// 3. 生成 JWT
+	return jwt.NewJWT().GenToken(user.UserID, user.Username)
 }
 

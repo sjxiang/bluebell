@@ -60,7 +60,8 @@ GORM
         SELECT * FROM `user` WHERE username = 'xjxiang'  // 查不出
 
 
-    不要想数据库操作失败（大量这种操作，真的下头）
+
+    不要考虑数据库操作失败（大量下面这种操作，真的下头）
 
         if result.Error != nil {
 
