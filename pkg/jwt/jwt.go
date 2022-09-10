@@ -46,13 +46,14 @@ type JWTCustomClaims struct {
 // GenToken 生成 JWT
 func (jwt *JWT) GenToken(userID int64, username string) (string, error) {
 
+	// 创建自定义的载体
 	payload := JWTCustomClaims{
 		UserID: userID,
 		UserName: username,
 
 		StandardClaims: jwtpkg.StandardClaims{
 			ExpiresAt: time.Now().Add(TokenExpireDuation).Unix(),  // 过期时间
-			Issuer: settings.Conf.AppConfig.Name,  // 签发者
+			Issuer: settings.Conf.AppConfig.Name,                  // 签发者
         },
 	}
 

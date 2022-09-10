@@ -31,7 +31,7 @@ func Validate(ctx *gin.Context, obj interface{}, handler ValidateFunc) bool {
 	
 	// 3. 判断验证是否 pass
 	if len(errs) > 0 {
-		ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+		ctx.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{  // 422
 			"message": "请求验证不通过，具体请查看 errors",
 			"errors": errs,
 		})

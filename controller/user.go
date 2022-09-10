@@ -63,9 +63,21 @@ func LoginHandler(ctx *gin.Context) {
 // ValidateHandler 身份验证
 func ValidateHandler(ctx *gin.Context) {
 	
-	// 1. 获取请求参数 & 参数校验
+	// 如果是登录的用户，判断请求头中是否有 "有效的 JWT "
+	isLogin := true
+
+	if isLogin {
+		ctx.String(http.StatusOK, "在线")
+	} else {
+		ctx.String(http.StatusUnauthorized, "请登录")
+	}
 	
-	// 2. 业务逻辑处理
-	
-	// 3. 返回响应
+
 }
+
+
+// 1. 获取请求参数 & 参数校验
+	
+// 2. 业务逻辑处理
+	
+// 3. 返回响应

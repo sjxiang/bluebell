@@ -78,4 +78,7 @@ GORM
     {"error": "crypto/bcrypt: hashedPassword is not the hash of the given password"}
 
 
+
+
+2022-09-11 00:51:56     ERROR   middlewares/require_auth.go:51  解析出错_jwt_ ParseToke {"error": "token is expired by 56m56s"}
 ```
