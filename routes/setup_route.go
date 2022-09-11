@@ -24,9 +24,6 @@ func Setup(mode string) *gin.Engine {
 	// 注册业务路由
 	registerApiRoutes(router)
 	
-	// 配置 ping 路由
-	setupHealthHandler(router)
-
 	// 配置 404 路由
 	setupNoFoundHandler(router)
 
@@ -44,7 +41,7 @@ func registerMiddleWare(router *gin.Engine) {
 
 func setupNoFoundHandler(router *gin.Engine) {
 	
-	// 处理错误路由
+	// 处理错误路由，精确匹配
 	router.NoRoute(func(ctx *gin.Context) {
 
 		// 获取 header 里面的 'Accept' 信息
@@ -65,12 +62,3 @@ func setupNoFoundHandler(router *gin.Engine) {
 	})
 }
 
-
-func setupHealthHandler(router *gin.Engine) {
-
-	router.GET("/ping", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"Msg": "pong",
-		})
-	})
-}

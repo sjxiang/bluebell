@@ -29,5 +29,5 @@ func Init(cfg *settings.AppConfig) (err error) {
 
 
 func GetID() int64 {
-	return node.Generate().Int64()
+	return node.Generate().Int64()  // .String() 可以换
 }

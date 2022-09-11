@@ -60,9 +60,15 @@ func JWTAuth(ctx *gin.Context) {
 		return
 	}
 
-	// 检查 expired time
+	// 检查 expired time （重新登录，申请 JWT）
 	if float64(time.Now().Unix()) > float64(claims.ExpiresAt) {
-		ctx.AbortWithStatus(http.StatusUnauthorized)
+		ctx.JSON(http.StatusUnauthorized, serializer.Response{
+			Code: 401,
+			Msg: "过期的 token",
+		})
+
+		ctx.Abort()
+		return
 	}
 	
 

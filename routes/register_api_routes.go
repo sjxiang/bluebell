@@ -6,6 +6,7 @@ import (
 	"github.com/sjxiang/bluebell/pkg/middlewares"
 )
 
+
 // 注册业务路由
 func registerApiRoutes(router *gin.Engine) {
 
@@ -15,6 +16,13 @@ func registerApiRoutes(router *gin.Engine) {
 	// 用户登录
 	router.POST("/login", controller.LoginHandler)
 
-	// 身份验证
-	router.GET("/validate", middlewares.JWTAuth, controller.ValidateHandler)
+	
+	v1 := router.Group("/api/v1")
+
+	v1.Use( middlewares.JWTAuth)  // 应用 JWT 认证中间件
+
+	{
+
+	}	
+
 }

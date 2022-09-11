@@ -5,6 +5,16 @@ NO_COLOR=\033[0m
 OK_COLOR=\033[32;01m
 ERROR_COLOR=\033[31;01m
 
+BINARY="bluebell"
+
+
+
+# all 默认命令
+all: gotool build
+
+
+build:
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ${BINARY}
 
 
 run:
@@ -14,6 +24,27 @@ run:
 	@echo '🎯'
 	@echo ''
 	
+
+
+gotool:
+	go fmt ./
+	go vet ./
+
+
+clean:
+	@if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
+
+
+help:
+	@echo ''
+	@printf '$(OK_COLOR) 选项 🎯$(NO_COLOR)\n'
+	@echo ''
+	@echo "make - 格式化 Go 代码，并编译生成二进制文件"
+	@echo "make build - 编译 Go 代码，生成二进制文件"
+	@echo "make run - 直接运行 Go 代码"
+	@echo "make clean - 移除二进制文件"
+	@echo "make gotool - 运行 Go 工具 'fmt' 和 'vet' "
+	@echo ''
 
 
 
@@ -31,8 +62,6 @@ container_close:
 	@docker-compose -f ./docker-compose.yml down 
 	@printf '$(OK_COLOR) .. 🎯$(NO_COLOR)\n'
 	@echo ''
-
-
 
 
 login_mysql:
@@ -70,8 +99,6 @@ container_net:
 	@echo ''
 	@printf '$(OK_COLOR) .. 🎯$(NO_COLOR)\n'
 	@echo ''
-
-
 
 
 
