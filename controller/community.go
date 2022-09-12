@@ -4,8 +4,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sjxiang/bluebell/pkg/serializer"
 	"go.uber.org/zap"
+	
+	"github.com/sjxiang/bluebell/pkg/serializer"
+	"github.com/sjxiang/bluebell/logic"
+	
 )
 
 // --- 跟社区论坛相关
@@ -13,7 +16,6 @@ import (
 func CommunityHandler(ctx *gin.Context) {
 	
 	
-
 	// 查询到所有的社区（community_id、community_name）以列表的形式返回
 	data, err := logic.GetCommunityList()
 	if err != nil {

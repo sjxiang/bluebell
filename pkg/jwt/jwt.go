@@ -25,7 +25,7 @@ type JWT struct {
 
 func NewJWT() *JWT {
 
-	refreshTime := 60
+	refreshTime := 60  // 暂时用不上
 
 	return &JWT{
 		SignKey: []byte(settings.Conf.AppConfig.Secret),
@@ -33,7 +33,7 @@ func NewJWT() *JWT {
 	}
 }
 
-const TokenExpireDuation = time.Hour * 2
+const TokenExpireDuation = time.Hour * 720  // 24 x 30，1 个月
 
 type JWTCustomClaims struct {
 	UserID 			int64  `json:"user_id"`

@@ -18,11 +18,10 @@ func registerApiRoutes(router *gin.Engine) {
 
 	
 	v1 := router.Group("/api/v1")
-
 	v1.Use( middlewares.JWTAuth)  // 应用 JWT 认证中间件
 
 	{
-
+		v1.GET("/community", controller.CommunityHandler)
 	}	
 
 }
