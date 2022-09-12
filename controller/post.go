@@ -4,6 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+
+	"github.com/sjxiang/bluebell/logic"
 	"github.com/sjxiang/bluebell/pkg/serializer"
 	"github.com/sjxiang/bluebell/requests"
 )
@@ -18,13 +21,27 @@ func CreatePostHandler(ctx *gin.Context) {
 		return
 	} 
 
-	ctx.JSON(http.StatusOK, serializer.Response{
-		Data: &p,
-	})
-	// 2. 创建帖子
-	
-	// 3. 返回响应	
+	userID, err := GetCurentUser(ctx) 
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, serializer.DBErr("", err))
 
+		return
+	}
+
+	// 2. 创建帖子
+	if err := logic.CreatePost(p, userID); err != nil {
+		zap.L().Error("logic.CreatePost(p) failed", zap.Error(err))
+		ctx.JSON(http.StatusBadRequest, serializer.DBErr("", err))
+
+		return
+	}
+
+
+	// 3. 返回响应	
+	ctx.JSON(http.StatusOK, serializer.Response{
+		Msg: "创建 post 成功",
+	})
+	
 }
 
 
