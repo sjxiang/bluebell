@@ -26,7 +26,7 @@ func CommunityHandler(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, serializer.Response{
 		Msg: "",
-		Data: data,
+		Data: serializer.BuildCommunitys(data),
 	})
 
 }

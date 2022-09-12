@@ -7,7 +7,7 @@ import (
 
 
 
-func GetCommunityList() ([]*models.Community, error) {
+func GetCommunityList() ([]models.Community, error) {
 	// 查找所有的 community 并返回
 	return mysql.GetCommunityList()
 }

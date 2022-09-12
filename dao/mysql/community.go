@@ -7,11 +7,11 @@ import (
 )
 
 
-func GetCommunityList() ([]*models.Community, error) {
+func GetCommunityList() ([]models.Community, error) {
 	
-	var communityList []*models.Community
+	var communityList []models.Community
 
-	DB.Select("community_id", "community_name").Find(&communityList)
+	DB.Select("community_id", "community_name", "").Find(&communityList)
 
 	if len(communityList) == 0 {
 		return nil, errors.New("数据库里找不到")
