@@ -79,6 +79,10 @@ GORM
 
 
 
+govalidator
+    对应 Param，只能是 string
 
-middlewares/require_auth.go:51  解析出错_jwt_ ParseToke {"error": "token is expired by 56m56s"}
+    还要转 strconv.ParseInt(str, 10, 64)
+
+
 ```

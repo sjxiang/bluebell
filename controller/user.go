@@ -61,8 +61,3 @@ func LoginHandler(ctx *gin.Context) {
 
 
 
-// 1. 获取请求参数 & 参数校验
-	
-// 2. 业务逻辑处理
-	
-// 3. 返回响应

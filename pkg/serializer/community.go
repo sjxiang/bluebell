@@ -8,20 +8,19 @@ type Community struct {
 	ID            uint64  `json:"id"`
 	CommunityID   int64   `json:"community_id"`
 	CommunityName string  `json:"community_name"`
-	Introduction  string  `json:"introduction"`
-	CreatedAt     int64   `json:"created_at"`
+	Introduction  string  `json:"introduction,omitempty"`
+	CreatedAt     int64   `json:"created_at,omitempty"`
 }
 
 
 // BuildCommunity 序列化视频
 func BuildCommunity(item models.Community) Community {
 	return Community{
-		ID: item.ID,
 		CommunityID: item.CommunityID,
 		CommunityName: item.CommunityName,
-		Introduction: item.Introduction,
-		CreatedAt: item.CreatedAt.Unix(),  // unix 时间戳
-		
+
+		// CreatedAt: item.CreatedAt.Unix(),  // unix 时间戳
+
 		// Avatar:     item.AvatarURL(),  // 签名的 key 
 		// View:       item.View(),
 	}
@@ -29,13 +28,23 @@ func BuildCommunity(item models.Community) Community {
 
 
 // BuildCommunity 序列化视频列表
-func BuildCommunitys(items []models.Community) (communitys []Community) {
+func BuildCommunityList(items []models.Community) (communityList []Community) {
 
 	for _, item := range items {
 
 		community := BuildCommunity(item)
-		communitys = append(communitys, community)
+		communityList = append(communityList, community)
 	}
 
-	return communitys
+	return communityList
+}
+
+
+func BuildCommunityDetail(item models.Community) Community {
+	return Community{
+		CommunityID: item.CommunityID,
+		CommunityName: item.CommunityName,
+		Introduction: item.Introduction,
+		CreatedAt: item.CreatedAt.Unix(),  // unix 时间戳
+	}
 }
