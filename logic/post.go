@@ -38,3 +38,9 @@ func CreatePost(p *requests.ParamCreatePost, authorID int64) error {
 func GetPostByID(pid int64) (*models.Post, error) {
 	return mysql.GetPostByID(pid)
 }
+
+
+func GetPostList(pageSize, pageNum int64) ([]models.Post, error) {
+
+	return mysql.GetPostList(pageSize, pageNum)
+}

@@ -72,17 +72,56 @@ func GetPostDetailHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, serializer.Response{
 		Data: serializer.BuildPost(*data),
 	})
-
 }
+
+
+
+// 分页查询帖子
+func GetPostListHandler(ctx *gin.Context) {
+
+	// 获取分页查询参数
+	pageSizeStr := ctx.Query("pageSize")
+	pageNumStr := ctx.Query("pageNum")
+
+	
+	pageSize, err := strconv.ParseInt(pageSizeStr, 10, 64)
+	if err != nil {
+		ctx.JSON(http.StatusUnprocessableEntity, serializer.ParamErr("偏移量参数错误", err))
+		return
+	}
+
+	pageNum, err := strconv.ParseInt(pageNumStr, 10, 64)
+	if err != nil {
+		ctx.JSON(http.StatusUnprocessableEntity, serializer.ParamErr("限制参数错误", err))
+		return
+	}
+
+
+
+	// 数据库查询
+	data, err := logic.GetPostList(pageSize, pageNum)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, serializer.DBErr("", err))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, serializer.Response{
+		Data: serializer.BuildPostList(data),
+	})
+}
+
+
 
 
 // 删
 func DeletePostHandler(ctx *gin.Context) {
+
 	// 1. 获取请求参数 & 参数校验
 		
 	// 2. 业务逻辑处理
 		
 	// 3. 返回响应	
+
 }
 
 
@@ -94,8 +133,6 @@ func UpdatePostHandler(ctx *gin.Context) {
 		
 	// 3. 返回响应	
 }
-
-
 
 
 // 查

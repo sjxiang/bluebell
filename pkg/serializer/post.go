@@ -7,13 +7,13 @@ import (
 
 // Post 帖子序列化器
 type Post struct {
-	PostID        int64  `json:"post_id"` 
+	PostID        int64  `json:"post_id,omitempty"` 
 	Title   	  string `json:"title"`
-	Content       string `json:"content"`
-	AuthorID      int64  `json:"author_id"`
-	CommunityID   string   `json:"community_id"` 
+	Content       string `json:"content,omitempty"`
+	AuthorID      int64  `json:"author_id,omitempty"`
+	CommunityID   string `json:"community_id,omitempty"` 
 	Status        int32  `json:"-"`
-	UpdatedAt     int64  `json:"updateed_at"`
+	UpdatedAt     int64  `json:"updateed_at,omitempty"`
 }
 
 
@@ -30,3 +30,15 @@ func BuildPost(item models.Post) Post {
 	}
 }
 
+
+
+func BuildPostList(items []models.Post) (postList []Post) {
+
+	for _, item := range items {
+
+		post := BuildPost(item)
+		postList = append(postList, post)
+	}
+
+	return postList
+}

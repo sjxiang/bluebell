@@ -3,8 +3,11 @@ package routes
 import (
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	// "github.com/gin-contrib/pprof"
+
 
 	"github.com/sjxiang/bluebell/pkg/middlewares"
 )
@@ -17,6 +20,9 @@ func Setup(mode string) *gin.Engine {
 	} 
 	
 	router := gin.New()
+
+	// pprof
+	// pprof.Register(router)
 	
 	// 注册中间件 
 	registerMiddleWare(router)
@@ -35,6 +41,7 @@ func registerMiddleWare(router *gin.Engine) {
 	router.Use(
 		middlewares.Logger(), 
 		middlewares.Recovery(),
+		middlewares.RateLimit(2 * time.Second, 1),
 	)
 }
 
