@@ -33,3 +33,8 @@ func CreatePost(p *requests.ParamCreatePost, authorID int64) error {
 
 	return nil
 }
+
+
+func GetPostByID(pid int64) (*models.Post, error) {
+	return mysql.GetPostByID(pid)
+}
