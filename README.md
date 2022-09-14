@@ -80,7 +80,7 @@ GORM
 
 
 govalidator
-    对应 Param，只能是 string
+    对应 Param，只能是 string (json tag 可以设置 string)
 
     还要转 strconv.ParseInt(str, 10, 64)
 

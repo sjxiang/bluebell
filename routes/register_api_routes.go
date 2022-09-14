@@ -21,12 +21,19 @@ func registerApiRoutes(router *gin.Engine) {
 	v1.Use( middlewares.JWTAuth)  // 应用 JWT 认证中间件
 
 	{
+
+		// 话题
 		v1.GET("/community", controller.CommunityHandler)
 		v1.GET("/community/:id", controller.CommunityDeatilHandler)
 
+		// 帖子
 		v1.POST("/post/add", controller.CreatePostHandler)
 		v1.GET("/post/:id", controller.GetPostDetailHandler)
 		v1.GET("/post/list", controller.GetPostListHandler)
+
+		// 投票
+		v1.POST("/vote", controller.PostVoteHandler)
+
 	}	
 
 }
